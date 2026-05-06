@@ -1,11 +1,10 @@
 import time
-from typing import NoReturn
-
 import keyboard
 from colorama import Fore, Style, init
     
 init(autoreset=True)
 
+START_KEY = "i"
 STOP_KEY = "q"
 STARTUP_DELAY = 2  # seconds
 KEY_PRESS_DURATION = 0.1  # seconds
@@ -39,33 +38,47 @@ except ValueError:
     time_between_presses = DEFAULT_INTERVAL
 
 stop_macro: bool = False
+macro_running: bool = False
+
+
+def start_stop_macro_function() -> None:
+    global macro_running
+    macro_running = not macro_running
+    if macro_running:
+        print(f"{Fore.GREEN}{Style.BRIGHT}Macro started.{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.YELLOW}{Style.BRIGHT}Macro paused.{Style.RESET_ALL}")
 
 
 def stop_macro_function() -> None:
-    global stop_macro
+    global stop_macro, macro_running
     stop_macro = True
+    macro_running = False
     print(f"{Fore.RED}{Style.BRIGHT}Macro stopped.{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}{Style.BRIGHT}Thank you for using KeyLoop!{Style.RESET_ALL}")
-        
 
+
+keyboard.add_hotkey(START_KEY, start_stop_macro_function, suppress=True)
 keyboard.add_hotkey(STOP_KEY, stop_macro_function, suppress=True)
 
 time.sleep(STARTUP_DELAY)
 
 
-def press_key() -> NoReturn:
-    global stop_macro
+def press_key() -> None:
+    global stop_macro, macro_running
     try:
-        print(f"{Fore.GREEN}{Style.BRIGHT}Press '{STOP_KEY}' to stop the macro.{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}{Style.BRIGHT}Press '{START_KEY}' to start the macro.{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}{Style.BRIGHT}Press '{STOP_KEY}' to exit.{Style.RESET_ALL}\n")
+        
         while not stop_macro:
-            if stop_macro:
-                break
-            keyboard.press(key)
-            time.sleep(KEY_PRESS_DURATION)
-            keyboard.release(key)
-            if stop_macro:
-                break
-            time.sleep(time_between_presses)
+            if macro_running:
+                keyboard.press(key)
+                time.sleep(KEY_PRESS_DURATION)
+                keyboard.release(key)
+                if not stop_macro:
+                    time.sleep(time_between_presses)
+            else:
+                time.sleep(0.1)  # Small sleep to avoid high CPU usage
     except KeyboardInterrupt:
         print(f"{Fore.YELLOW}{Style.BRIGHT}Macro interrupted.{Style.RESET_ALL}")
 
