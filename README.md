@@ -1,12 +1,14 @@
 # KeyLoop 🎮
 
-A simple keyboard macro automation tool that automatically presses a specified key at regular intervals.
+A powerful keyboard and mouse macro automation tool that automatically presses keys or clicks the mouse at regular intervals. Features hotkey controls for easy on/off toggling.
 
 ## Features
 
-- 🎯 **Customizable key**: Press any keyboard key repeatedly
-- ⏱️ **Adjustable interval**: Set custom time between key presses
-- 🛑 **Easy stop**: Press 'q' to stop the macro at any time
+- ⌨️ **Keyboard & Mouse modes**: Choose between automated key presses or mouse clicks
+- 🎯 **Customizable input**: Press any keyboard key or mouse button repeatedly
+- ⏱️ **Adjustable interval**: Set custom time between actions (supports decimals)
+- 🚀 **Hotkey controls**: Press 'i' to start/pause and 'q' to stop (much easier than Ctrl+C)
+- ⏳ **Startup delay**: 2-second countdown before macro begins
 
 ## Installation
 
@@ -33,17 +35,21 @@ Run the script:
 python main.py
 ```
 
-### Prompts
+### Configuration Prompts
 
-1. **Enter the key you want to press** (default is spacebar)
-   - Examples: `space`, `a`, `enter`, `shift`, `ctrl`
+1. **Choose mode** (1 for keyboard, 2 for mouse - default is keyboard)
+   
+2. **Specify your input**:
+   - **Keyboard mode**: Enter the key to press (e.g., `space`, `a`, `enter`, `shift`, `ctrl`)
+   - **Mouse mode**: Enter the button (e.g., `left`, `right`, `middle`)
 
-2. **Enter the time between presses in seconds** (default is 1)
-   - Examples: `0.5`, `2`, `5`
+3. **Enter the interval** in seconds between actions (default is 1)
+   - Examples: `0.1`, `0.5`, `1`, `2`, `5`
 
 ### Controls
 
-- **'q' key**: Stop the macro immediately (suppressed - won't appear in terminal)
+- **'i' key**: Start/Pause the macro (hotkey - suppressed input)
+- **'q' key**: Stop the macro completely and exit (hotkey - suppressed input)
 - **Ctrl+C**: Interrupt the macro (alternative way to stop)
 
 ## System Requirements & Cross-Platform Notes
@@ -67,8 +73,9 @@ python main.py
 
 ## Dependencies
 
-- **keyboard** (0.13.5+) - Cross-platform keyboard event handling
-- **colorama** (0.4.4+) - Cross-platform colored terminal text
+- **keyboard** (0.13.5) - Cross-platform keyboard event handling and hotkey detection
+- **mouse** (0.7.1) - Cross-platform mouse control and clicking
+- **colorama** (0.4.6) - Cross-platform colored terminal text
 
 See `requirements.txt` for exact versions.
 
@@ -92,12 +99,39 @@ See `requirements.txt` for exact versions.
 
 ## Example Usage
 
+### Keyboard Mode
 ```
 Welcome to KeyLoop
 
+Choose mode - (1) Keyboard or (2) Mouse autoclicker (default is 1): 1
 Enter the key you want to press (default is spacebar): space
-Enter the time between presses in seconds (default is 1): 2
-Press 'q' to stop the macro.
+Enter the time between presses in seconds (ex: 0.1, 0.5, 1, 2 - default is 1): 0.5
+
+Starting in 2...
+Press 'i' to start the macro.
+Press 'q' to exit.
+```
+
+### Mouse Mode
+```
+Welcome to KeyLoop
+
+Choose mode - (1) Keyboard or (2) Mouse autoclicker (default is 1): 2
+Enter the mouse button (left/right/middle - default is left): left
+Enter the time between presses in seconds (ex: 0.1, 0.5, 1, 2 - default is 1): 1
+
+Starting in 2...
+Press 'i' to start the macro.
+Press 'q' to exit.
+```
+
+## Tips & Tricks
+
+- **Gaming**: Great for repetitive tasks in games (e.g., auto-clicking, holding keys)
+- **Testing**: Automate UI testing with repeated mouse clicks or key presses
+- **Accessibility**: Useful for users who need assistance with repetitive keyboard/mouse tasks
+- **AFK tasks**: Perfect for farming or gathering in games
+- **Fine-tuning intervals**: Start with 0.1 seconds for fast actions, increase if needed for stability
 ```
 
 This will press the spacebar every 2 seconds until you press 'q'.
