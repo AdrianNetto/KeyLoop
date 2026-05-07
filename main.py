@@ -72,16 +72,16 @@ keyboard.add_hotkey(STOP_KEY, stop_macro_function, suppress=True)
 for i in range(STARTUP_DELAY, 0, -1):
     print(f"{Fore.CYAN}{Style.BRIGHT}Starting in {i}...{Style.RESET_ALL}", end="\r")
     time.sleep(1)
-
-time.sleep(STARTUP_DELAY)
-
+    if i == 1:
+        print(f"{Fore.GREEN}{Style.BRIGHT}Starting...{Style.RESET_ALL}            ")
+        time.sleep(1)
 
 def press_key() -> None:
     global stop_macro, macro_running
     try:
         print(f"{Fore.GREEN}{Style.BRIGHT}Press '{START_KEY}' to start the macro.{Style.RESET_ALL}")
         print(f"{Fore.YELLOW}{Style.BRIGHT}Press '{STOP_KEY}' to exit.{Style.RESET_ALL}\n")
-        
+
         while not stop_macro:
             if macro_running:
                 if mode == "keyboard":
